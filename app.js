@@ -5,6 +5,7 @@ const imgURL = "https://image.tmdb.org/t/p/w500";
 const content = document.getElementById("mainContent");
 const searchBar = document.getElementById("movieForm");
 const search = document.getElementById("search");
+const detailURL = baseURL + "/movie/";
 
 
 findMovies(apiURL);
@@ -12,6 +13,10 @@ findMovies(apiURL);
 function findMovies(url) {
     fetch(url).then(res => res.json()).then(data => getMovies(data.results));
 }
+
+// function findOne(url) {
+//     fetch(url).then(res => res.json()).then(data => console.log(data))
+// }
 
 
 function getMovies(data) {
@@ -40,6 +45,7 @@ function getMovies(data) {
             let x = this.parentElement.parentElement.classList[1];
             x = x.replace("i", "");
             x = Number(x);
+            // let movie = findOne(detailURL + `${String(x)}` + `?${apiKey}`)
             watchList.push(x);
             console.log(watchList)
             $.ajax({
@@ -65,12 +71,6 @@ function getRating(rating) {
     } else {
         return "red"
     }
-}
-
-function addItem(movie) {
-    console.log(movie);
-    watchList.push(movie);
-    console.log(watchList);
 }
 
 

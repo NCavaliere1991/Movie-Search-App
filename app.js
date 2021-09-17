@@ -5,11 +5,7 @@ const imgURL = "https://image.tmdb.org/t/p/w500";
 const content = document.getElementById("mainContent");
 const searchBar = document.getElementById("movieForm");
 const search = document.getElementById("search");
-const addButton = document.getElementsByClassName("addButton");
-const watchList = [];
 
-var x = addButton.length;
-console.log(x)
 
 findMovies(apiURL);
 
@@ -20,13 +16,16 @@ function findMovies(url) {
 
 function getMovies(data) {
     content.innerHTML = "";
+    let watchList = [];
     data.forEach(movie => {
-        const { title, poster_path, vote_average } = movie;
+        // console.log(movie);
+        const { title, poster_path, overview, vote_average, id } = movie;
         const newMovie = document.createElement('div');
-        newMovie.classList.add("movie-container");
+        newMovie.classList.add("movie-container", `i${id}`);
         newMovie.innerHTML = `<img
         src="${imgURL + poster_path}" alt="${title}" />
         <div class="description">
+        <h4 class="overview">${overview}</h4>
         <button class="addButton">Add to Watchlist</button>
         </div>
     <div class="info">
@@ -35,7 +34,27 @@ function getMovies(data) {
     </div>`
         content.appendChild(newMovie);
     })
-
+    let addButton = document.getElementsByClassName("addButton");
+    for (y in addButton) {
+        addButton[y].onclick = function () {
+            let x = this.parentElement.parentElement.classList[1];
+            x = x.replace("i", "");
+            x = Number(x);
+            watchList.push(x);
+            console.log(watchList)
+            $.ajax({
+                url: "dh.php",
+                type: "POST",
+                data: { data: watchList },
+                // cache: false,
+                // contentType: false,
+                // processData: false,
+                success: function () {
+                    console.log("completed")
+                }
+            });
+        }
+    }
 }
 
 function getRating(rating) {
@@ -49,6 +68,7 @@ function getRating(rating) {
 }
 
 function addItem(movie) {
+    console.log(movie);
     watchList.push(movie);
     console.log(watchList);
 }
@@ -65,4 +85,3 @@ searchBar.addEventListener('submit', (event) => {
         findMovies(apiURL);
     }
 })
-

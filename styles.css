@@ -1,10 +1,14 @@
 body {
     margin: 0;
     background-color: #002db3;
+    font-family: 'Roboto', sans;
 }
 
 nav {
     background-color: #1a53ff;
+}
+
+.navbar {
     display: flex;
     justify-content: space-between;
 }
@@ -12,6 +16,11 @@ nav {
 nav h2 {
     color: white;
     margin-left: 15px;
+}
+
+.buttons {
+    text-align: center;
+    padding-bottom: 15px;
 }
 
 .search {
@@ -35,13 +44,13 @@ nav h2 {
 section {
     display: flex;
     flex-wrap: wrap;
-    justify-content: center;
 }
 
 .movie-container {
     width: 300px;
     margin: 1rem;
     background-color: #1a53ff;
+    border: 1px solid black;
 }
 
 .movie-container img {
@@ -63,7 +72,7 @@ section {
     height: 100%;
     align-items: center;
     justify-content: center;
-    margin: auto;
+    flex-wrap: wrap;
 }
 
 .movie-container:hover {

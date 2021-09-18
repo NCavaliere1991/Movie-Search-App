@@ -46,19 +46,20 @@ function getMovies(data) {
             x = x.replace("i", "");
             x = Number(x);
             // let movie = findOne(detailURL + `${String(x)}` + `?${apiKey}`)
-            watchList.push(x);
-            console.log(watchList)
-            $.ajax({
-                url: "dh.php",
-                type: "POST",
-                data: { data: watchList },
-                // cache: false,
-                // contentType: false,
-                // processData: false,
-                success: function () {
-                    console.log("completed")
-                }
-            });
+            if (!watchList.includes(x)) {
+                watchList.push(x);
+                $.ajax({
+                    url: "dh.php",
+                    type: "POST",
+                    data: { data: watchList },
+                    // cache: false,
+                    // contentType: false,
+                    // processData: false,
+                    success: function () {
+                        console.log("completed")
+                    }
+                });
+            }
         }
     }
 }

@@ -10,18 +10,37 @@ function findMovies(url) {
 
 function showMovies(data) {
     const newMovie = document.createElement('div');
-    newMovie.classList.add("movie-container");
+    newMovie.classList.add("movie-container", `i${data.id}`);
     newMovie.innerHTML = `<img
         src="${imgURL + data.poster_path}" alt="${data.title}" />
         <div class="description">
         <h4 class="overview">${data.overview}</h4>
-        <button class="addButton">Add to Watchlist</button>
+        <button class="removeButton">Remove from Watchlist</button>
         </div>
     <div class="info">
         <h3>${data.title}</h3>
         <span class=${getRating(data.vote_average)}>${data.vote_average}</span>
     </div>`
     content.appendChild(newMovie);
+    let removeButton = document.getElementsByClassName("removeButton");
+    for (y in removeButton) {
+        removeButton[y].onclick = function () {
+            let x = this.parentElement.parentElement.classList[1];
+            x = x.replace("i", "");
+            x = Number(x);
+            $.ajax({
+                url: "remove.php",
+                type: "POST",
+                data: { data: x },
+                // cache: false,
+                // contentType: false,
+                // processData: false,
+                success: function () {
+                    console.log("completed");
+                }
+            })
+        }
+    }
 };
 
 $('document').ready(function () {

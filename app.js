@@ -21,7 +21,6 @@ function findMovies(url) {
 
 function getMovies(data) {
     content.innerHTML = "";
-    let watchList = [];
     data.forEach(movie => {
         // console.log(movie);
         const { title, poster_path, overview, vote_average, id } = movie;
@@ -46,23 +45,21 @@ function getMovies(data) {
             x = x.replace("i", "");
             x = Number(x);
             // let movie = findOne(detailURL + `${String(x)}` + `?${apiKey}`)
-            if (!watchList.includes(x)) {
-                watchList.push(x);
-                $.ajax({
-                    url: "dh.php",
-                    type: "POST",
-                    data: { data: watchList },
-                    // cache: false,
-                    // contentType: false,
-                    // processData: false,
-                    success: function () {
-                        console.log("completed")
-                    }
-                });
-            }
+            $.ajax({
+                url: "dh.php",
+                type: "POST",
+                data: { data: x },
+                // cache: false,
+                // contentType: false,
+                // processData: false,
+                success: function () {
+                    console.log("completed")
+                }
+            });
         }
     }
 }
+
 
 function getRating(rating) {
     if (rating >= 8) {

@@ -140,3 +140,7 @@ button:hover {
     background-color: red;
     color: white;
 }
+
+.genreBtnClick {
+    background-color: orange;
+}

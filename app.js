@@ -9,6 +9,7 @@ const search = document.getElementById("search");
 const detailURL = baseURL + "/movie/"
 const genreUrl = `https://api.themoviedb.org/3/genre/movie/list?${apiKey}&language=en-US`;
 const genres = document.getElementById("genres");
+const moreBtn = document.getElementById("moreBtn");
 let mainList = [];
 let movieIds = [];
 
@@ -30,7 +31,6 @@ function getMoviesByGenre(data) {
         const { title, poster_path, overview, vote_average, id } = movie;
         const genreList = movie.genre_ids;
         genreList.forEach(genre => {
-            console.log(id, genre)
             if (!movieIds.includes(id) && mainList.includes(genre)) {
                 movieIds.push(id)
                 const newMovie = document.createElement('div');
@@ -47,9 +47,28 @@ function getMoviesByGenre(data) {
                 </div>`
                 content.appendChild(newMovie);
             }
-            console.log(movieIds);
         })
     })
+    let addButton = document.getElementsByClassName("addButton");
+    for (y in addButton) {
+        addButton[y].onclick = function () {
+            let x = this.parentElement.parentElement.classList[1];
+            x = x.replace("i", "");
+            x = Number(x);
+            addButton[y].innerHTML = `<button class="removeButton">Remove from Watchlist</button>`
+            $.ajax({
+                url: "dh.php",
+                type: "POST",
+                data: { data: x },
+                // cache: false,
+                // contentType: false,
+                // processData: false,
+                success: function () {
+                    console.log("completed")
+                }
+            });
+        }
+    }
 }
 
 function getGenres(url) {
@@ -65,16 +84,27 @@ function showMore() {
     getMoreMovies("https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&" + apiKey + `&page=${currentPage}`);
 }
 
+function showMoreByGenre() {
+    currentPage += 1;
+    getMoreMovies(`https://api.themoviedb.org/3/discover/movie?api_key=645b84c0424790ef23fda061c7c0aa17&with_genres=${id}&page=${currentPage}`);
+}
+
 function showGenres(data) {
+    moreBtn.innerHTML = "";
     data.forEach(genre => {
         const { id, name } = genre;
         mainList.push(id);
-
         const newButton = document.createElement('button');
         newButton.classList.add('genreBtn')
         newButton.innerHTML = name;
         newButton.onclick = function () {
-            findMoviesByGenre(`https://api.themoviedb.org/3/discover/movie?api_key=645b84c0424790ef23fda061c7c0aa17&with_genres=${id}`);
+            newButton.classList.replace('genreBtn', 'genreBtnClick')
+            findMoviesByGenre(`https://api.themoviedb.org/3/discover/movie?api_key=645b84c0424790ef23fda061c7c0aa17&with_genres=${id}&page=${currentPage}`);
+            moreBtn.innerHTML = `<button>See More</button>`
+            moreBtn.onclick = function () {
+                currentPage += 1;
+                getMoreMovies(`https://api.themoviedb.org/3/discover/movie?api_key=645b84c0424790ef23fda061c7c0aa17&with_genres=${id}&page=${currentPage}`);
+            };
         }
         genres.append(newButton);
     })

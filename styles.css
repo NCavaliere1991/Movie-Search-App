@@ -128,3 +128,15 @@ button:hover {
     margin: auto;
     padding: 20px;
 }
+
+#genres {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    padding-bottom: 20px;
+}
+
+.genreBtn {
+    background-color: red;
+    color: white;
+}

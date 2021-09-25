@@ -14,10 +14,6 @@ function findMovies(url) {
     fetch(url).then(res => res.json()).then(data => getMovies(data.results));
 }
 
-// function findOne(url) {
-//     fetch(url).then(res => res.json()).then(data => console.log(data))
-// }
-
 
 function getMovies(data) {
     content.innerHTML = "";
@@ -44,7 +40,7 @@ function getMovies(data) {
             let x = this.parentElement.parentElement.classList[1];
             x = x.replace("i", "");
             x = Number(x);
-            // let movie = findOne(detailURL + `${String(x)}` + `?${apiKey}`)
+            addButton[y].innerHTML = `<button class="removeButton">Remove from Watchlist</button>`
             $.ajax({
                 url: "dh.php",
                 type: "POST",

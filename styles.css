@@ -121,3 +121,10 @@ button:hover {
     background-color: #e6c300;
 }
 
+#moreBtn {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    margin: auto;
+    padding: 20px;
+}

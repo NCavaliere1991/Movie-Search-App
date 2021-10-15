@@ -129,6 +129,14 @@ button:hover {
     padding: 20px;
 }
 
+#showBtn {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    margin: auto;
+    padding: 20px;
+}
+
 #genres {
     display: flex;
     flex-wrap: wrap;

@@ -37,6 +37,20 @@ function showMovies(data) {
                 // processData: false,
                 success: function () {
                     console.log("completed");
+                    content.innerHTML = "";
+                    $.ajax({
+                        url: 'watchlist.json',
+                        type: 'get',
+                        dataType: 'JSON',
+                        cache: false,
+                        success: function (data) {
+                            $.each(data, function (index, value) {
+                                movie = findMovies(detailURL + `${String(value)}` + `?${apiKey}`);
+
+                            })
+                        }
+                    })
+
                 }
             })
         }

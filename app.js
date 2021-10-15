@@ -1,7 +1,7 @@
 const apiKey = "api_key=645b84c0424790ef23fda061c7c0aa17";
 let currentPage = 1;
 const baseURL = "https://api.themoviedb.org/3";
-const apiURL = baseURL + "/discover/movie?sort_by=popularity.desc&" + apiKey + `&page=${currentPage}`;
+const apiURL = baseURL + "/discover/movie?sort_by=popularity.desc&" + apiKey + `&page=1`;
 const imgURL = "https://image.tmdb.org/t/p/w500";
 const content = document.getElementById("mainContent");
 const searchBar = document.getElementById("movieForm");
@@ -27,6 +27,7 @@ function findMoviesByGenre(url) {
 
 function getMoviesByGenre(data) {
     content.innerHTML = "";
+    moreBtn.innerHTML = "";
     data.forEach(movie => {
         const { title, poster_path, overview, vote_average, id } = movie;
         const genreList = movie.genre_ids;
@@ -49,24 +50,38 @@ function getMoviesByGenre(data) {
             }
         })
     })
+
     let addButton = document.getElementsByClassName("addButton");
     for (y in addButton) {
         addButton[y].onclick = function () {
             let x = this.parentElement.parentElement.classList[1];
             x = x.replace("i", "");
             x = Number(x);
-            addButton[y].innerHTML = `<button class="removeButton">Remove from Watchlist</button>`
-            $.ajax({
-                url: "dh.php",
-                type: "POST",
-                data: { data: x },
-                // cache: false,
-                // contentType: false,
-                // processData: false,
-                success: function () {
-                    console.log("completed")
-                }
-            });
+            if (this.innerHTML === "Remove from Watchlist") {
+                $.ajax({
+                    url: "remove.php",
+                    type: "POST",
+                    data: { data: x },
+                    success: function () {
+                        console.log("completed");
+                    }
+                })
+                this.innerHTML = "Add to Watchlist"
+            } else {
+                $.ajax({
+                    url: "dh.php",
+                    type: "POST",
+                    data: { data: x },
+                    // cache: false,
+                    // contentType: false,
+                    // processData: false,
+                    success: function () {
+                        console.log("completed")
+                    }
+                });
+                this.innerHTML = "Remove from Watchlist"
+
+            }
         }
     }
 }
@@ -133,18 +148,31 @@ function getMore(data) {
             let x = this.parentElement.parentElement.classList[1];
             x = x.replace("i", "");
             x = Number(x);
-            addButton[y].innerHTML = `<button class="removeButton">Remove from Watchlist</button>`
-            $.ajax({
-                url: "dh.php",
-                type: "POST",
-                data: { data: x },
-                // cache: false,
-                // contentType: false,
-                // processData: false,
-                success: function () {
-                    console.log("completed")
-                }
-            });
+            if (this.innerHTML === "Remove from Watchlist") {
+                $.ajax({
+                    url: "remove.php",
+                    type: "POST",
+                    data: { data: x },
+                    success: function () {
+                        console.log("completed");
+                    }
+                })
+                this.innerHTML = "Add to Watchlist"
+            } else {
+                $.ajax({
+                    url: "dh.php",
+                    type: "POST",
+                    data: { data: x },
+                    // cache: false,
+                    // contentType: false,
+                    // processData: false,
+                    success: function () {
+                        console.log("completed")
+                    }
+                });
+                this.innerHTML = "Remove from Watchlist"
+
+            }
         }
     }
 }
@@ -175,18 +203,31 @@ function getMovies(data) {
             let x = this.parentElement.parentElement.classList[1];
             x = x.replace("i", "");
             x = Number(x);
-            addButton[y].innerHTML = `<button class="removeButton">Remove from Watchlist</button>`
-            $.ajax({
-                url: "dh.php",
-                type: "POST",
-                data: { data: x },
-                // cache: false,
-                // contentType: false,
-                // processData: false,
-                success: function () {
-                    console.log("completed")
-                }
-            });
+            if (this.innerHTML === "Remove from Watchlist") {
+                $.ajax({
+                    url: "remove.php",
+                    type: "POST",
+                    data: { data: x },
+                    success: function () {
+                        console.log("completed");
+                    }
+                })
+                this.innerHTML = "Add to Watchlist"
+            } else {
+                $.ajax({
+                    url: "dh.php",
+                    type: "POST",
+                    data: { data: x },
+                    // cache: false,
+                    // contentType: false,
+                    // processData: false,
+                    success: function () {
+                        console.log("completed")
+                    }
+                });
+                this.innerHTML = "Remove from Watchlist"
+
+            }
         }
     }
 }
